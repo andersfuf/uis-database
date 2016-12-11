@@ -1,8 +1,8 @@
 ﻿--AL20161211
 -- removing
-DROP DATABASE uis;
+--DROP DATABASE uis;
 -- User: uis
-DROP ROLE IF EXISTS uis;
+--DROP ROLE IF EXISTS uis;
 
 CREATE USER uis WITH PASSWORD 'uis';
 
