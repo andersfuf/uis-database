@@ -12,3 +12,10 @@
 \i company/company-database/book_p.sql
 \i company/company-database/employee_p.sql
 \i company/company-database/room_schema_p.sql
+
+\i movie/movie-database/movie_schema_p.sql
+
+\i pc/pc-database/pc_schema_p.sql
+
+\i ships/ships-database/ships_schema_p.sql
+
