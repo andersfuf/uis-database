@@ -1,0 +1,5 @@
+﻿--AL20161211
+-- granting
+GRANT ALL ON DATABASE uis001 TO uis;
+GRANT ALL ON DATABASE uis TO uis001;
+
