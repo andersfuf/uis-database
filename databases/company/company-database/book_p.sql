@@ -16,6 +16,7 @@ foreign key (book_id) references book
 
 create sequence book_seq;
 
+start transaction;
 insert into book values(nextval('book_seq'), 'CISSP All-in-One Exam Guide');
 insert into author values('Shon Harris', currval('book_seq'));
 
@@ -60,4 +61,4 @@ insert into author values('Matthew MacDonald', currval('book_seq'));
 insert into book values(nextval('book_seq'), 'CCENT/CCNA ICND1 Official Exam Certification Guide');
 insert into author values('Wendell Odom', currval('book_seq'));
 
---commit;
+commit;

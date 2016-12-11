@@ -1,3 +1,4 @@
+start transaction;
 
 insert into Person
 values ('Smith',	'123 Elm St.',		'801-556-2239');

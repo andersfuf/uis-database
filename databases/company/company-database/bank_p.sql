@@ -52,20 +52,20 @@ create table borrower
 
 
 /* populate relations */
-
+start transaction;
 insert into customer values ('Jones',	'Main',		'Harrison');
 insert into customer values ('Smith',	'Main',		'Rye');
 insert into customer values ('Hayes',	'Main',		'Harrison');
 insert into customer values ('Curry',	'North',	'Rye');
 insert into customer values ('Lindsay',	'Park',		'Pittsfield');
 insert into customer values ('Turner',	'Putnam',	'Stamford');
-insert into customer values ('Williams',	'Nassau',	'Princeton');
+insert into customer values ('Williams', 'Nassau',	'Princeton');
 insert into customer values ('Adams',	'Spring',	'Pittsfield');
 insert into customer values ('Johnson',	'Alma',		'Palo Alto');
-insert into customer values ('Glenn',	'Sand Hill',	'Woodside');
+insert into customer values ('Glenn',	'Sand Hill', 'Woodside');
 insert into customer values ('Brooks',	'Senator',	'Brooklyn');
 insert into customer values ('Green',	'Walnut',	'Stamford');
-insert into customer values ('Jackson',	'University',	'Salt Lake');
+insert into customer values ('Jackson',	'University', 'Salt Lake');
 insert into customer values ('Majeris',	'First',	'Rye');
 insert into customer values ('McBride',	'Safety',	'Rye');
 
@@ -121,4 +121,4 @@ insert into borrower values ('Adams',	'L-16');
 insert into borrower values ('McBride',	'L-20');
 insert into borrower values ('Smith',	'L-21');
 
---commit;
+commit;
