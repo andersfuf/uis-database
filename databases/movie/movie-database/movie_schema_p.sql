@@ -121,10 +121,10 @@ insert into moviestar values('Dana Carvey', 'Missosula Rd.', 'M', to_date('6/2/5
 insert into moviestar values('Kevin Spacey', 'New York Av.', 'F', to_date('12/21/37', 'MM/DD/YY'));
 insert into moviestar values('Paul Newman', 'Westport Av.', 'M', to_date('1/26/25', 'MM/DD/YY'));
 insert into moviestar values('Joanne Woodward', 'Westport Av.', 'F', to_date('2/27/30', 'MM/DD/YY'));
-insert into moviestar values('Sandra Bullock', 'Kensingtion Place', 'F', to_date('7/26/64', 'MM/DD/YY'));
+insert into moviestar values('Sandra Bullock', 'Kensingtion Place', 'F', to_date('7/26/1964', 'MM/DD/YYYY'));
 insert into moviestar values('Naseeruddin Shah', 'Ocean St.', 'M', to_date('7/20/50', 'MM/DD/YY'));
 insert into moviestar values('Lillete Dubey', 'Rubin Rd.', 'F', to_date('5/13/54', 'MM/DD/YY'));
-insert into moviestar values('Aishwara Rai', 'India Rd.', 'F', to_date('11/1/73', 'MM/DD/YY'));
+insert into moviestar values('Aishwara Rai', 'India Rd.', 'F', to_date('11/1/1973', 'MM/DD/YYYY'));
 insert into moviestar values('Barret Oliver', 'Oranienburger Strasse', 'M', to_date('3/1/70', 'MM/DD/YY'));
 insert into moviestar values('Mark Evans', 'Rubin Rd.', 'F', to_date('5/13/54', 'MM/DD/YY'));
 insert into moviestar values('Brian Johnson', 'Rubin Rd.', 'F', to_date('5/13/54', 'MM/DD/YY'));
