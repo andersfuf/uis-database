@@ -1,0 +1,28 @@
+# program start
+
+enter x2 (ship example)
+
+——
+# sample input solution A
+
+
+
+max price 4000
+min speed 1.2 (marjans pc)   1,2 (Anders osx)
+min ram 512
+min hd 80
+min screen 15.2 (marjans pc)   15,2 (Anders osx) 
+
+
+# sample input solution B
+
+manufacturer  K
+model 2031
+speed 2.3 (marjans pc)   2,3 (Anders osx)
+ram 8096
+hd 2048
+price 2000
+
+# last part of program
+Input validation test
+use int for every prompt: 456

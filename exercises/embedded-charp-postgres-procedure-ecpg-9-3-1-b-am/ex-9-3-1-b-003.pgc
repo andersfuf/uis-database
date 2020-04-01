@@ -1,0 +1,97 @@
+// UIS, 2020 - Jan Rolandsen
+// Exercise 9.3.1.b  (C language)
+
+/* Using the Embedded SQL C Preprocessor (ECPG) in PostgreSQL
+    On my Windows 10 computer, using PostgreSQL 12.2, I can compile my ecpg program as follows:
+    
+    ecpg ex-9-3-1-b.pgc
+    cc -I  "c:/Program Files/PostgreSQL/12/include" -c  ex-9-3-1-b.c
+    cc -o  ex-9-3-1-b  ex-9-3-1-b.o  -L "c:/Program Files/PostgreSQL/12/lib" -l ecpg
+
+    and now I can run my program:
+    ex-9-3-1-b.exe
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+EXEC SQL INCLUDE sqlca ;
+EXEC SQL WHENEVER SQLERROR sqlprint;
+
+void findLaptops () {
+
+    // connecting ...
+    //EXEC SQL CONNECT TO pcdb@localhost:5432 USER postgres/uis ;         // user and password
+    EXEC SQL CONNECT TO develop@localhost:5432 USER develop/'' ;         // user and password
+    if (sqlca.sqlcode) {
+       printf (" Error: %s\n", sqlca.sqlerrm.sqlerrmc);     // the ECPG signal method
+       exit (1);                                            // exit and signal error
+    }
+	EXEC SQL BEGIN DECLARE SECTION;
+		const char *stmt_set_schema = "set search_path = pc; ";
+	EXEC SQL END DECLARE SECTION ;
+	
+	EXEC SQL EXECUTE IMMEDIATE :stmt_set_schema;
+
+	EXEC SQL BEGIN DECLARE SECTION;
+		int minRam, minHd, result ;              // given by user via section below
+		float minSpeed, minScreen ;
+		char model[5], maker[2] ;
+		int ram, hd, screen, speed, price ;
+		const char *stmt = "SELECT L.model, L.speed, L.ram, L.hd, L.screen, L.price, P.maker "
+		                   "FROM Laptop L, Product P WHERE L.speed >= ? AND L.ram >= ? AND L.hd >= ? "
+		                   "  AND L.screen >= ? AND L.model = P.model ;" ;
+	EXEC SQL END DECLARE SECTION ;
+
+    // If the last SQL statement was successful, then sqlca.sqlerrd[1] contains the OID of the processed row, if applicable, 
+    // and sqlca.sqlerrd[2] contains the number of processed or returned rows, if applicable to the command.
+    
+    printf ("Query:\n");
+    
+	/* Ask user for maximum price and minimum values of speed, ram, hd size, screen size */
+	printf("Enter minimum value of speed (ex. 1.5-2.2): ");       scanf("%f", &minSpeed);
+	printf("Enter minimum value of ram   (ex. 512-2048): ");         scanf("%d", &minRam);
+	printf("Enter minimum value of hd size (ex. 60-240): ");     scanf("%d", &minHd);
+	printf("Enter minimum value of screen size (ex. 13.3-20.1): "); scanf("%f", &minScreen);
+
+	EXEC SQL PREPARE query1 FROM :stmt ;
+	EXEC SQL DECLARE cursor1 CURSOR FOR query1 ;
+	EXEC SQL OPEN cursor1 USING :minSpeed, :minRam, :minHd, :minScreen ;
+
+    /* When end of result set reached, break out of while loop.
+       Observe: In the C language 0 is FALSE, and everything else is TRUE */
+    while (1) {  // run forever
+	  	EXEC SQL FETCH NEXT cursor1 INTO :model, :minSpeed, :minRam, :minHd, :minScreen, :price, :maker ;
+        // When end of resultSet is reached, break out of the while loop
+        // If a warning or error occurred, then sqlca.sqlcode will be negative and sqlca.sqlstate will be different from "00000". 
+        if (sqlca.sqlcode) break;       // break only if sqlca.sqlcode <> 0
+            
+		printf ("maker: %s, model: %s, speed: %.2f, ram: %d, hd: %d, screen: %.1f, price: %d\n",
+			    maker, model, minSpeed, minRam, minHd, minScreen, price) ;
+	}
+	
+	EXEC SQL CLOSE cursor1 ;    // release resource (memory)
+	EXEC SQL DEALLOCATE PREPARE query1 ;
+    
+    // disconnecting ...
+	printf (" disconnecting ... \n") ;
+    EXEC SQL DISCONNECT ALL ;
+}
+
+/* run main program: */
+int main () {
+    
+    findLaptops () ;
+    return 0 ;      // exit and signal ok
+}
+
+
+/*   This query will return 3 rows:
+	    SELECT L.model, L.speed, L.ram, L.hd, L.screen, L.price, P.maker
+		 FROM Laptop L, Product P
+		 WHERE L.model = P.model 
+		    AND L.speed >= 2.0
+		 	AND L.ram >= 500
+		 	AND L.hd >= 100
+		 	AND L.screen >= 14.5 ;
+*/

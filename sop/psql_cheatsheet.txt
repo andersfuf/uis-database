@@ -1,0 +1,59 @@
+#NoGUI Linux PostreSQL Cheat Sheet/Guide (Should probably also work for Mac users)
+
+#Installation and Setup:
+************
+For exact installation and setup directions please consult a guide for your specific system:
+Ubuntu:
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04
+Arch:
+https://wiki.archlinux.org/index.php/PostgreSQL
+Mac:
+https://www.codementor.io/engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb
+************
+General Linux Instructions:
+ 1. Install PostgreSQL using your system's package manager
+(2) For some systems you would need to activate the postgres service. Consult the beforementioned guide 
+ 3. Switch to the default postgres user (create one if needed):
+    sudo -u postgres -i
+(4) Sometimes you would also need to initialise a database cluster. Consult the guide
+    for more information.
+ 5. Create a new postgres role (use the same name as your Linux username,
+    otherwise you would have to specify your username each time you use psql with -U userName)
+    createuser --interactive
+ 6. Create a new database:
+    createdb databaseName
+ 7. Switch back to your user by pressing CTRL+d
+
+#How to use PostgreSQL from the command line:
+Method 1: Using the database shell:
+1. Access the shell using:
+   psql -d databaseName
+2. Write a query or a meta command inside the shell. A query should always end with a semicolon.
+
+Some helpful commands:
+Show information about all tables in the current database:
+=> \dt
+List databases
+=> \l
+Exit/quit the psql shell:
+=> \q or CTRL+d
+To see all meta-commands run:
+=> \?
+Get help:
+=> \help
+
+Method 2: Using a SQL script
+1. Create a document test.sql using your favourite editor
+   (you can get SQL syntax highlighting and other goodies for your editor to make your life easier)
+2. Write your SQL commands inside the document.
+3. Run it as you would run a python script using:
+   psql -d databaseName -f test.sql
+
+#SQL script you can try 
+DROP TABLE items;
+CREATE TABLE items (
+id     integer PRIMARY KEY,
+name   varchar(40)
+);
+INSERT INTO items VALUES (1, 'Item1');
+SELECT * FROM items;
